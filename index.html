@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base target="_blank">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Special Places — Hybrid Text Research</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --teal:#0e7490;--teal2:#155e75;--teal-lt:#ecfeff;
+  --green:#15803d;--green2:#14532d;--green-lt:#f0fdf4;
+  --amber:#92400e;--amber-lt:#fffbeb;
+  --purple:#5b21b6;--purple-lt:#f5f3ff;
+  --sand:#f8f7f3;--ink:#1c1917;--muted:#78716c;--pale:#d6d3d1;--rule:#e7e5e4;
+}
+body{font-family:'Nunito',system-ui,sans-serif;background:var(--sand);color:var(--ink);line-height:1.6;}
+.hero{background:linear-gradient(160deg,#0c3b4a 0%,#0f5132 55%,#1a6b3c 100%);padding:2.5rem 1.5rem 3.5rem;text-align:center;color:#fff;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;opacity:.5;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");}
+.hero-chip{position:relative;display:inline-flex;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:99px;padding:.3rem .9rem;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#a7f3d0;margin-bottom:.9rem;}
+.hero h1{position:relative;font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3.2rem);line-height:1.1;margin-bottom:.7rem;}
+.hero h1 span{color:#6ee7b7;font-style:italic;}
+.hero p{position:relative;max-width:520px;margin:0 auto 1.5rem;opacity:.85;font-size:.95rem;line-height:1.65;}
+.hero-how{position:relative;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:1rem 1.3rem;max-width:560px;margin:0 auto;}
+.hero-how h3{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:#a7f3d0;margin-bottom:.55rem;font-weight:800;}
+.hero-how ol{padding-left:1.3rem;display:flex;flex-direction:column;gap:.3rem;}
+.hero-how li{font-size:.84rem;color:rgba(255,255,255,.85);line-height:1.5;}
+.hero-how li strong{color:#fff;}
+.hero-wave{position:absolute;bottom:-1px;left:0;width:100%;}
+.place-nav{display:flex;background:#fff;border-bottom:2px solid var(--rule);position:sticky;top:0;z-index:200;box-shadow:0 2px 10px rgba(0,0,0,.07);}
+.place-btn{flex:1;padding:.9rem 1rem;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;text-align:center;}
+.place-btn:hover{background:var(--sand);}
+.place-btn[data-p="fingal"].on{color:var(--teal);border-bottom-color:var(--teal);}
+.place-btn[data-p="wollumbin"].on{color:var(--green);border-bottom-color:var(--green);}
+.panel{display:none;}.panel.on{display:block;}
+.place-hero{position:relative;height:320px;overflow:hidden;}
+.place-hero img{width:100%;height:100%;object-fit:cover;display:block;}
+.ph-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.05) 55%);}
+.ph-txt{position:absolute;bottom:0;left:0;right:0;padding:1.4rem 1.75rem;color:#fff;}
+.pname{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,4vw,2.6rem);font-weight:900;text-shadow:0 2px 10px rgba(0,0,0,.4);}
+.psub{font-size:.8rem;opacity:.85;letter-spacing:.07em;text-transform:uppercase;margin-top:.2rem;}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;padding:1.25rem 1.5rem .25rem;max-width:960px;margin:0 auto;}
+.gal{border-radius:10px;overflow:hidden;position:relative;aspect-ratio:4/3;background:#e2e8f0;}
+.gal img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s;}
+.gal:hover img{transform:scale(1.05);}
+.gal-cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.72),transparent);color:#fff;font-size:.7rem;padding:.5rem .65rem;line-height:1.35;}
+.img-credit{text-align:center;font-size:.67rem;color:var(--muted);padding:.4rem 1.5rem .75rem;max-width:960px;margin:0 auto;}
+.map-wrap{padding:0 1.5rem;max-width:960px;margin:0 auto;}
+.map-box{background:#e2f0f7;border-radius:12px;overflow:hidden;border:1px solid var(--rule);margin-bottom:.75rem;}
+.map-box iframe{width:100%;height:255px;border:none;display:block;}
+.map-foot{background:#fff;padding:.55rem 1rem;font-size:.77rem;color:var(--muted);display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--rule);}
+.map-foot a{font-weight:700;text-decoration:none;}
+.fingal-panel .map-foot a{color:var(--teal);}
+.wollumbin-panel .map-foot a{color:var(--green);}
+.section-nav{display:flex;gap:.45rem;padding:1rem 1.5rem .8rem;flex-wrap:wrap;background:var(--sand);border-bottom:1px solid var(--rule);border-top:1px solid var(--rule);margin-top:.5rem;}
+.section-btn{padding:.42rem .95rem;border-radius:99px;border:2px solid var(--rule);background:#fff;font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:700;color:var(--muted);cursor:pointer;transition:all .18s;white-space:nowrap;}
+.section-btn:hover{border-color:#aaa;color:var(--ink);}
+.fingal-panel .section-btn.on{background:var(--teal);color:#fff;border-color:var(--teal);}
+.wollumbin-panel .section-btn.on{background:var(--green);color:#fff;border-color:var(--green);}
+.sec{display:none;padding:1.5rem;max-width:900px;margin:0 auto;}
+.sec.on{display:block;}
+.sec-head{display:flex;align-items:center;gap:.9rem;margin-bottom:1.25rem;padding-bottom:.9rem;border-bottom:2px solid var(--rule);}
+.sec-num{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:900;color:#fff;flex-shrink:0;}
+.sec-head h3{font-family:'Playfair Display',serif;font-size:1.25rem;}
+.sec-head p{font-size:.77rem;color:var(--muted);margin-top:.1rem;}
+.sc{border-radius:10px;padding:1rem 1.2rem;margin-bottom:1.5rem;border:2px solid;}
+.sc h4{font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;margin-bottom:.55rem;font-weight:800;}
+.sc ul{list-style:none;display:flex;flex-direction:column;gap:.3rem;}
+.sc li{display:flex;gap:.5rem;font-size:.87rem;line-height:1.5;align-items:flex-start;}
+.sc li::before{content:'○';flex-shrink:0;margin-top:.05rem;font-size:.8rem;}
+.sc-teal{background:var(--teal-lt);border-color:var(--teal);color:var(--teal2);}
+.sc-amber{background:var(--amber-lt);border-color:var(--amber);color:var(--amber);}
+.sc-purple{background:var(--purple-lt);border-color:var(--purple);color:var(--purple);}
+.sc-green{background:var(--green-lt);border-color:var(--green);color:var(--green2);}
+.q-section{margin-bottom:1.5rem;}
+.qs-title{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.7rem;font-weight:800;}
+.q-list{display:flex;flex-direction:column;gap:.5rem;}
+.q-item{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:.85rem 1rem;display:flex;align-items:flex-start;gap:.7rem;}
+.q-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;color:#fff;flex-shrink:0;margin-top:.1rem;}
+.q-text{font-size:.9rem;line-height:1.55;color:var(--ink);}
+.src-title-row{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800;margin:1.5rem 0 .7rem;}
+.src{background:#fff;border-radius:12px;border:1px solid var(--rule);margin-bottom:.65rem;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04);transition:box-shadow .2s;cursor:pointer;}
+.src:hover{box-shadow:0 3px 12px rgba(0,0,0,.09);}
+.src-hdr{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.1rem;gap:.75rem;}
+.src-left{display:flex;align-items:center;gap:.75rem;flex:1;min-width:0;}
+.src-ico{width:46px;height:46px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;background:var(--sand);}
+.src-t{font-weight:700;font-size:.88rem;line-height:1.3;color:var(--ink);}
+.src-org{font-size:.7rem;color:var(--muted);margin-top:.1rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;}
+.tag{display:inline-flex;font-size:.62rem;font-weight:700;padding:.1rem .42rem;border-radius:4px;margin-left:.35rem;text-transform:uppercase;letter-spacing:.05em;vertical-align:middle;}
+.t-gov{background:#d1fae5;color:#065f46;}
+.t-mus{background:#dbeafe;color:#1e40af;}
+.t-edu{background:#ede9fe;color:#4c1d95;}
+.t-sci{background:#fef3c7;color:#92400e;}
+.t-loc{background:#fce7f3;color:#9d174d;}
+.src-arr{font-size:.85rem;color:var(--pale);transition:transform .2s;flex-shrink:0;}
+.src.open .src-arr{transform:rotate(180deg);}
+.src-body{display:none;padding:0 1.1rem 1rem;border-top:1px solid var(--rule);}
+.src.open .src-body{display:block;}
+.lf{background:var(--sand);border-radius:8px;padding:.7rem .9rem;margin:.85rem 0 .75rem;}
+.lf h5{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.45rem;font-weight:800;}
+.lf ul{list-style:none;display:flex;flex-direction:column;gap:.3rem;}
+.lf li{display:flex;gap:.45rem;font-size:.83rem;line-height:1.5;color:var(--muted);align-items:flex-start;}
+.lf li::before{content:'\2192';flex-shrink:0;font-size:.78rem;margin-top:.1rem;}
+.src-card-li{display:flex;gap:.45rem;font-size:.85rem;line-height:1.5;color:#57534e;align-items:flex-start;}
+.src-card-li::before{content:'→';flex-shrink:0;font-size:.78rem;margin-top:.1rem;color:#a8a29e;}
+.open-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.48rem 1.05rem;border-radius:8px;font-size:.8rem;font-weight:700;color:#fff;text-decoration:none;transition:opacity .15s;}
+.open-btn:hover{opacity:.85;}
+.fingal-panel .open-btn{background:var(--teal);}
+.wollumbin-panel .open-btn{background:var(--green);}
+.callout{border-radius:10px;padding:.9rem 1.1rem;margin-bottom:1.25rem;border-left:4px solid;font-size:.86rem;line-height:1.65;}
+.callout h4{font-weight:800;margin-bottom:.3rem;font-size:.86rem;}
+.c-teal{background:var(--teal-lt);border-color:var(--teal);color:var(--teal2);}
+.c-green{background:var(--green-lt);border-color:var(--green);color:var(--green2);}
+.c-amber{background:var(--amber-lt);border-color:var(--amber);color:var(--amber);}
+.c-purple{background:var(--purple-lt);border-color:var(--purple);color:var(--purple);}
+.alert{background:#fffbeb;border:2px solid #d97706;border-radius:10px;padding:1rem 1.2rem;margin:1rem 1.5rem;max-width:920px;}
+.alert h4{color:#92400e;font-size:.88rem;font-weight:800;margin-bottom:.3rem;}
+.alert p{font-size:.85rem;line-height:1.6;}
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.6rem;}
+.vc{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:.7rem .9rem;}
+.vw{font-weight:800;font-size:.88rem;}
+.vd{font-size:.77rem;color:var(--muted);margin-top:.18rem;line-height:1.45;}
+.footer{background:linear-gradient(135deg,#0c3b4a,#166534);padding:2rem 1.5rem;}
+.fi{max-width:900px;margin:0 auto;}
+.footer h3{font-family:'Playfair Display',serif;color:#a7f3d0;font-size:1.1rem;margin-bottom:1rem;}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:.7rem;}
+.mode{background:rgba(255,255,255,.1);border-radius:10px;padding:.9rem 1rem;border:1px solid rgba(255,255,255,.15);}
+.mode h4{font-size:.68rem;text-transform:uppercase;letter-spacing:.12em;color:#a7f3d0;margin-bottom:.35rem;font-weight:800;}
+.mode p{font-size:.8rem;color:rgba(255,255,255,.85);line-height:1.5;}
+.fn{margin-top:.9rem;padding-top:.9rem;border-top:1px solid rgba(255,255,255,.2);font-size:.8rem;color:rgba(255,255,255,.7);text-align:center;font-style:italic;}
+@media(max-width:640px){.gallery{grid-template-columns:1fr 1fr;}.place-hero{height:220px;}.sec{padding:1rem;}.map-wrap{padding:0 1rem;}.alert{margin:.75rem 1rem;}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-chip">Stage 3 English &middot; Argument and Authority &middot; One Small Island</div>
+  <h1>Our <span>Special</span> Places</h1>
+  <p>Use this page to guide your research. The questions are yours to answer &mdash; open the sources to find out.</p>
+  <div class="hero-how">
+    <h3>How to use this page</h3>
+    <ol>
+      <li>Choose your place &mdash; <strong>Fingal Head</strong> or <strong>Wollumbin</strong></li>
+      <li>Work through <strong>all four sections</strong> &mdash; they match your planning template exactly</li>
+      <li>Read the questions, then open a source and find the answers yourself</li>
+      <li>Write your notes on your <strong>planning template</strong> as you go</li>
+      <li>Record every source in your <strong>reference list</strong> &mdash; name, URL, date visited</li>
+    </ol>
+  </div>
+  <svg class="hero-wave" viewBox="0 0 1440 36" fill="none"><path d="M0 36C360 0 1080 0 1440 36H0Z" fill="#f8f7f3"/></svg>
+</div>
+
+<nav class="place-nav">
+  <button class="place-btn on" data-p="fingal" onclick="switchPlace('fingal')">&#127754; Fingal Head</button>
+  <button class="place-btn" data-p="wollumbin" onclick="switchPlace('wollumbin')">&#127755; Wollumbin</button>
+</nav>
+
+<!-- FINGAL HEAD -->
+<div class="panel fingal-panel on" id="p-fingal">
+
+<div class="place-hero" style="background:linear-gradient(160deg,#0c3b4a 0%,#0e7490 50%,#0f5132 100%);display:flex;align-items:flex-end;padding:0;">
+  <svg viewBox="0 0 1000 320" xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:100%;height:100%;top:0;left:0;" preserveAspectRatio="xMidYMid slice">
+    <!-- Sky -->
+    <rect width="1000" height="320" fill="#0c3b4a"/>
+    <!-- Sun glow -->
+    <ellipse cx="820" cy="80" rx="120" ry="60" fill="#1a5c7a" opacity="0.5"/>
+    <!-- Ocean -->
+    <rect y="200" width="1000" height="120" fill="#0e5c7a" opacity="0.6"/>
+    <rect y="210" width="1000" height="4" fill="#1a7a9a" opacity="0.4"/>
+    <rect y="220" width="1000" height="3" fill="#1a7a9a" opacity="0.3"/>
+    <!-- Island in distance -->
+    <ellipse cx="780" cy="195" rx="60" ry="18" fill="#0d4a5e"/>
+    <!-- Basalt columns - hexagonal prisms -->
+    <g fill="#1a2a35" opacity="0.9">
+      <polygon points="80,320 100,220 120,320"/>
+      <polygon points="100,320 120,220 140,320"/>
+      <polygon points="120,320 140,210 160,320"/>
+      <polygon points="140,320 160,215 180,320"/>
+      <polygon points="160,320 180,208 200,320"/>
+      <polygon points="180,320 200,212 220,320"/>
+      <polygon points="200,320 220,205 240,320"/>
+      <polygon points="220,320 240,210 260,320"/>
+      <polygon points="240,320 260,215 280,320"/>
+      <polygon points="260,320 280,208 300,320"/>
+      <polygon points="280,320 300,212 320,320"/>
+    </g>
+    <!-- Column highlights -->
+    <g fill="#2a4a5e" opacity="0.6">
+      <polygon points="82,320 98,222 102,320"/>
+      <polygon points="122,320 138,212 142,320"/>
+      <polygon points="162,320 178,210 182,320"/>
+      <polygon points="202,320 218,207 222,320"/>
+      <polygon points="242,320 258,212 262,320"/>
+      <polygon points="282,320 298,210 302,320"/>
+    </g>
+    <!-- Water reflection -->
+    <rect y="200" width="1000" height="120" fill="url(#wg)" opacity="0.4"/>
+    <defs><linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0e7490"/><stop offset="1" stop-color="#0c3b4a"/></linearGradient></defs>
+    <!-- Lighthouse -->
+    <rect x="440" y="140" width="14" height="70" fill="#e8e0d0"/>
+    <polygon points="437,140 454,140 447,125" fill="#cc3333"/>
+    <rect x="435" y="155" width="18" height="4" fill="#ccc"/>
+    <rect x="435" y="165" width="18" height="4" fill="#ccc"/>
+  </svg>
+  <div style="position:relative;z-index:2;padding:1.4rem 1.75rem;color:#fff;width:100%;background:linear-gradient(to top,rgba(0,0,0,.72) 0%,transparent 100%);">
+    <div class="pname">Fingal Head</div>
+    <div class="psub">Booninybah &middot; Goodjingburra Country &middot; Tweed Coast, NSW</div>
+  </div>
+</div>
+
+<div class="gallery">
+  <a href="https://commons.wikimedia.org/wiki/File:Cook_Island_seen_from_Fingal_Head,_New_South_Wales_01.jpg" target="_blank" style="text-decoration:none;">
+    <div class="gal" style="background:linear-gradient(135deg,#0e7490,#0c3b4a);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+      <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;top:0;left:0;" preserveAspectRatio="xMidYMid slice">
+        <rect width="200" height="150" fill="#0c3b4a"/>
+        <rect y="90" width="200" height="60" fill="#0e5c7a" opacity="0.7"/>
+        <ellipse cx="140" cy="88" rx="35" ry="12" fill="#0d4a5e"/>
+        <polygon points="10,150 30,95 50,150" fill="#1a2a35"/>
+        <polygon points="30,150 50,90 70,150" fill="#1a2a35"/>
+        <polygon points="50,150 70,92 90,150" fill="#1a2a35"/>
+        <polygon points="70,150 90,88 110,150" fill="#152535"/>
+      </svg>
+      <div class="gal-cap" style="z-index:2;">Cook Island &mdash; 600m offshore &nbsp;&#128247; View photo</div>
+    </div>
+  </a>
+  <a href="https://commons.wikimedia.org/wiki/File:Fingal_Head_Lighthouse,_Fingal_Head,_New_South_Wales_01.jpg" target="_blank" style="text-decoration:none;">
+    <div class="gal" style="background:linear-gradient(160deg,#1a3a2a,#0f5132);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+      <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;top:0;left:0;" preserveAspectRatio="xMidYMid slice">
+        <rect width="200" height="150" fill="#1a4a2a"/>
+        <rect y="110" width="200" height="40" fill="#0e3a1a" opacity="0.8"/>
+        <rect x="92" y="60" width="16" height="55" fill="#e8e0d0"/>
+        <polygon points="89,60 111,60 100,45" fill="#cc3333"/>
+        <rect x="87" y="72" width="26" height="4" fill="#aaa"/>
+        <rect x="87" y="82" width="26" height="4" fill="#aaa"/>
+        <rect x="85" y="115" width="30" height="20" fill="#c8b878"/>
+      </svg>
+      <div class="gal-cap" style="z-index:2;">Fingal Head Lighthouse, 1872 &nbsp;&#128247; View photo</div>
+    </div>
+  </a>
+  <a href="https://commons.wikimedia.org/wiki/File:Queensland_State_Archives_1936_Peep_at_Cook_Island_from_Fingal_Point_overlooking_Giants_Causeway_c_1934.png" target="_blank" style="text-decoration:none;">
+    <div class="gal" style="background:linear-gradient(135deg,#3a3020,#1a2a15);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+      <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;top:0;left:0;" preserveAspectRatio="xMidYMid slice">
+        <rect width="200" height="150" fill="#3a3020"/>
+        <rect y="80" width="200" height="70" fill="#2a4a30" opacity="0.6"/>
+        <rect x="5" y="5" width="190" height="140" fill="none" stroke="#8a7a60" stroke-width="3"/>
+        <text x="100" y="65" text-anchor="middle" fill="#c8b878" font-size="11" font-family="serif">Historical</text>
+        <text x="100" y="80" text-anchor="middle" fill="#c8b878" font-size="10" font-family="serif">c. 1934</text>
+        <polygon points="20,150 40,100 60,150" fill="#2a3a20" opacity="0.8"/>
+        <polygon points="40,150 60,105 80,150" fill="#2a3a20" opacity="0.8"/>
+        <ellipse cx="140" cy="88" rx="30" ry="10" fill="#2a3a20" opacity="0.8"/>
+      </svg>
+      <div class="gal-cap" style="z-index:2;">Historical photo, c.1934 &nbsp;&#128247; View photo</div>
+    </div>
+  </a>
+</div>
+<div class="img-credit">&#128247; Click any image card to view the actual photograph on Wikimedia Commons (free to use, CC licence)</div>
+
+<div class="map-wrap">
+  <div class="map-box">
+    <a href="https://www.openstreetmap.org/?mlat=-28.1917&mlon=153.5600#map=14/-28.1917/153.5600" target="_blank" style="display:block;"><iframe src="https://www.openstreetmap.org/export/embed.html?bbox=153.5200,-28.2300,153.6100,-28.1600&layer=mapnik&marker=-28.1917,153.5600" title="Map of Fingal Head" loading="lazy" style="pointer-events:none;"></iframe></a>
+    <div class="map-foot">
+      <span>&#128205; Fingal Head &mdash; Tweed Coast, 5 km south of the Queensland border</span>
+      <a href="https://www.openstreetmap.org/?mlat=-28.1917&mlon=153.5600#map=14/-28.1917/153.5600" target="_blank">Open larger map &#8599;</a>
+    </div>
+  </div>
+</div>
+
+<div class="section-nav">
+  <button class="section-btn on" onclick="switchSec('fingal','geo',this)">1 &middot; Geography</button>
+  <button class="section-btn" onclick="switchSec('fingal','human',this)">2 &middot; Human Impact</button>
+  <button class="section-btn" onclick="switchSec('fingal','issues',this)">3 &middot; Issues</button>
+  <button class="section-btn" onclick="switchSec('fingal','conservation',this)">4 &middot; Conservation</button>
+  <button class="section-btn" onclick="switchSec('fingal','vocab',this)">&#128214; Vocabulary</button>
+</div>
+<div class="sec on" id="fingal-geo"><div class="sec-head"><div class="sec-num" style="background:var(--teal)">1</div><div><h3>Geography</h3><p>Where it is &middot; what it looks like &middot; how it was formed &middot; animals and plants</p></div></div><div class="sc sc-teal"><h4>&#10003; Success criteria</h4><ul><li>Where Fingal Head is located</li><li>A description of the place</li><li>How it was formed</li><li>Animals and plants found there</li><li>Multimodal features &mdash; maps, diagrams or illustrations to help explain or add meaning</li></ul></div><div class="q-section"><div class="qs-title">Research questions &mdash; find the answers in the sources below</div><div class="q-list"><div class="q-item"><div class="q-num" style="background:var(--teal)">1</div><div class="q-text">Where exactly is Fingal Head? How far from Murwillumbah? What water features surround it?</div></div><div class="q-item"><div class="q-num" style="background:var(--teal)">2</div><div class="q-text">What do the rock formations look like? What is the scientific name for the type of columns they are?</div></div><div class="q-item"><div class="q-num" style="background:var(--teal)">3</div><div class="q-text">How were the basalt columns formed? How old are they? What process creates the hexagonal shape?</div></div><div class="q-item"><div class="q-num" style="background:var(--teal)">4</div><div class="q-text">What is the Goodjingburra clan's name for Fingal Head? What does that name mean &mdash; and why?</div></div><div class="q-item"><div class="q-num" style="background:var(--teal)">5</div><div class="q-text">What animals and plants live at Fingal Head and Cook Island? Can you name at least four species?</div></div><div class="q-item"><div class="q-num" style="background:var(--teal)">6</div><div class="q-text">What multimodal feature will you include in your geography section? A map? A diagram? An illustration? Sketch it on your planning template.</div></div></div></div><div class="callout c-teal"><h4>&#128161; Narrative thinking</h4>Once you have your facts, ask yourself: how does this place make you feel? What image or comparison could bring it to life for someone who has never been there? That is the narrative layer you need to weave in.</div><div class="src-title-row">Sources for Geography &mdash; open these to find your answers</div>
+    <div style="background:#fff3cd;border:2px solid #f59e0b;border-radius:10px;padding:.75rem 1rem;margin-bottom:.75rem;font-size:.9rem;color:#713f12;">
+      <strong>&#127910; Watch first!</strong> &mdash; See the real basalt columns up close before you start reading.
+    </div>
+    <a href="https://www.youtube.com/shorts/UR6NMKzpdlA" target="_blank" class="src-link" style="border:2px solid #f59e0b;">
+      <span class="src-ico">&#127910;</span><div class="src-info"><div class="src-title">Fingal Head Causeway &mdash; basalt columns up close <span class="src-tag" style="background:#fef3c7;color:#92400e;">VIDEO</span></div><div class="src-org">YouTube &mdash; short video, no login needed</div></div><span class="src-arr">&#8599;</span>
+    </a>
+    <a href="https://kids.kiddle.co/Fingal_Head,_New_South_Wales" target="_blank" class="src-link" style="border:2px solid #0ea5e9;">
+      <span class="src-ico">&#129304;</span><div class="src-info"><div class="src-title">Fingal Head facts for kids <span class="src-tag" style="background:#e0f2fe;color:#0c4a6e;">EASY READ</span></div><div class="src-org">Kiddle Encyclopedia &mdash; written for students</div></div><span class="src-arr">&#8599;</span>
+    </a>
+    <a href="https://museum.tweed.nsw.gov.au/files/assets/museum/documents/explore/natural-heritage/pooningbah-fingal-head.pdf" target="_blank" class="src-link">
+      <span class="src-ico">&#128196;</span><div class="src-info"><div class="src-title">Booninybah fact sheet <span class="src-tag t-mus">Museum</span></div><div class="src-org">Tweed Regional Museum &mdash; short PDF</div></div><span class="src-arr">&#8599;</span>
+    </a><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127963;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Booninybah &mdash; Fingal Head <span class="tag t-mus">Museum</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">Tweed Regional Museum</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://museum.tweed.nsw.gov.au/files/assets/museum/documents/explore/natural-heritage/pooningbah-fingal-head.pdf" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--teal);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>Location, description and First Nations significance</li><li>How the basalt columns formed and how old they are</li><li>Flora and fauna of the headland</li></ul></div>
+  <a href="https://museum.tweed.nsw.gov.au/explore/natural-heritage/explore-land-life-culture/fingal-head" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#128506;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Fingal Head &mdash; Geology of the Basalt Columns <span class="tag t-sci">Science</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">GeoMaps Australia</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://museum.tweed.nsw.gov.au/explore/natural-heritage/explore-land-life-culture/fingal-head" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--teal);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>How hexagonal columns form as lava cools &mdash; the science explained clearly</li><li>The link between Fingal Head and Cook Island underground</li><li>Scientific vocabulary: basalt, columnar jointing, tholeiitic, contraction</li></ul></div>
+  <a href="http://www.geomaps.com.au/scripts/finglehead.php" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127754;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Fingal Head and Dreamtime Beach <span class="tag t-loc">Local</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">OzBeaches</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="http://www.geomaps.com.au/scripts/finglehead.php" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--teal);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>Wildlife &mdash; turtles, birds, marine species at Cook Island</li><li>Description of the landscape and coastal environment</li><li>The critically endangered littoral rainforest</li></ul></div>
+  <a href="https://www.ozbeaches.com.au/blogs/beaches/fingal-head-and-dreamtime-beach-natural-beauty-amongst-ancient-lava-flows" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div></div><div class="sec" id="fingal-human"><div class="sec-head"><div class="sec-num" style="background:var(--amber)">2</div><div><h3>History of Human Impact</h3><p>What humans have done to this place over time</p></div></div><div class="sc sc-amber"><h4>&#10003; Success criteria</h4><ul><li>Who visited or used this place and when</li><li>What was damaged or changed by humans</li><li>The impact of European arrival on the place and on First Nations people</li><li>Key historical dates to build a timeline</li></ul></div><div class="q-section"><div class="qs-title">Research questions &mdash; find the answers in the sources below</div><div class="q-list"><div class="q-item"><div class="q-num" style="background:var(--amber)">1</div><div class="q-text">Who were the traditional custodians of this land? How long had they lived here before Europeans arrived?</div></div><div class="q-item"><div class="q-num" style="background:var(--amber)">2</div><div class="q-text">When did James Cook first sail past? What did he name and why?</div></div><div class="q-item"><div class="q-num" style="background:var(--amber)">3</div><div class="q-text">What happened to the Fingal Caves in the early 1900s? Where did those rocks end up?</div></div><div class="q-item"><div class="q-num" style="background:var(--amber)">4</div><div class="q-text">How has coastal development affected the headland and its rainforest over time?</div></div><div class="q-item"><div class="q-num" style="background:var(--amber)">5</div><div class="q-text">When did Cook Island first receive legal protection? What was it called before Europeans renamed it?</div></div></div></div><div class="callout c-amber"><h4>&#128161; Narrative thinking</h4>The Fingal Caves were destroyed in the early 1900s &mdash; rocks pulled apart for a breakwater. How would you write that moment so the reader <em>feels</em> what was lost? A sentence that makes them picture it, not just know it.</div><div class="src-title-row">Sources for Human Impact</div>
+
+    <a href="https://kids.kiddle.co/Fingal_Head,_New_South_Wales" target="_blank" class="src-link" style="border:2px solid #0ea5e9;">
+      <span class="src-ico">&#129304;</span><div class="src-info"><div class="src-title">Fingal Head history for kids <span class="src-tag" style="background:#e0f2fe;color:#0c4a6e;">EASY READ</span></div><div class="src-org">Kiddle Encyclopedia</div></div><span class="src-arr">&#8599;</span>
+    </a><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127963;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Booninybah &mdash; Fingal Head <span class="tag t-mus">Museum</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">Tweed Regional Museum</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://kids.kiddle.co/Fingal_Head,_New_South_Wales" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--teal);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>First Nations connection to Booninybah and custodianship</li><li>History of European contact and early settlement impact</li></ul></div>
+  <a href="https://museum.tweed.nsw.gov.au/explore/natural-heritage/explore-land-life-culture/fingal-head" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127754;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Fingal Head and Dreamtime Beach <span class="tag t-loc">Local</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">OzBeaches</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://museum.tweed.nsw.gov.au/explore/natural-heritage/explore-land-life-culture/fingal-head" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--teal);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>How coastal development has changed the headland over time</li><li>The history of the critically endangered littoral rainforest</li><li>Human impact on turtle nesting beaches</li></ul></div>
+  <a href="https://www.ozbeaches.com.au/blogs/beaches/fingal-head-and-dreamtime-beach-natural-beauty-amongst-ancient-lava-flows" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#128240;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Fingal Head Community History <span class="tag t-loc">Local</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">Fingal Head Community Association</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://www.ozbeaches.com.au/blogs/beaches/fingal-head-and-dreamtime-beach-natural-beauty-amongst-ancient-lava-flows" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--teal);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>Local history and timeline of the area</li><li>Environmental changes affecting the headland over time</li><li>Community perspective on human impact</li></ul></div>
+  <a href="https://fingalhead.com" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div></div><div class="sec" id="fingal-issues"><div class="sec-head"><div class="sec-num" style="background:var(--purple)">3</div><div><h3>Acknowledgment of Issues</h3><p>What threatens this place today</p></div></div><div class="sc sc-purple"><h4>&#10003; Success criteria</h4><ul><li>What specific threats does this place face today?</li><li>Which species or habitats are most at risk?</li><li>What does &ldquo;critically endangered&rdquo; mean &mdash; and why does it matter?</li><li>Use emotive language and modal words to show the urgency</li></ul></div><div class="q-section"><div class="qs-title">Research questions &mdash; find the answers in the sources below</div><div class="q-list"><div class="q-item"><div class="q-num" style="background:var(--purple)">1</div><div class="q-text">What is "critically endangered" &mdash; what does that classification actually mean for a habitat?</div></div><div class="q-item"><div class="q-num" style="background:var(--purple)">2</div><div class="q-text">What are the biggest threats to the littoral rainforest at Fingal Head right now?</div></div><div class="q-item"><div class="q-num" style="background:var(--purple)">3</div><div class="q-text">What threatens the green turtles and their nesting beaches?</div></div><div class="q-item"><div class="q-num" style="background:var(--purple)">4</div><div class="q-text">Why is the grey nurse shark at Cook Island critically endangered? What put it at risk?</div></div><div class="q-item"><div class="q-num" style="background:var(--purple)">5</div><div class="q-text">What would be lost forever if this place is not protected &mdash; for the environment, for culture, for future generations?</div></div></div></div><div class="callout c-purple"><h4>&#128161; Persuasive thinking</h4>Once you know the threats, ask yourself: what is the strongest argument for protecting this place? What modal words will you use? <em>must &mdash; cannot &mdash; essential &mdash; vital &mdash; urgent</em></div><div class="src-title-row">Sources for Issues</div>
+    <a href="https://kids.kiddle.co/Climate_change" target="_blank" class="src-link" style="border:2px solid #0ea5e9;">
+      <span class="src-ico">&#129304;</span><div class="src-info"><div class="src-title">What is climate change? <span class="src-tag" style="background:#e0f2fe;color:#0c4a6e;">EASY READ</span></div><div class="src-org">Kiddle Encyclopedia</div></div><span class="src-arr">&#8599;</span>
+    </a>
+    <a href="https://kids.kiddle.co/Sacred_site" target="_blank" class="src-link" style="border:2px solid #0ea5e9;">
+      <span class="src-ico">&#129304;</span><div class="src-info"><div class="src-title">What are sacred sites? <span class="src-tag" style="background:#e0f2fe;color:#0c4a6e;">EASY READ</span></div><div class="src-org">Kiddle Encyclopedia</div></div><span class="src-arr">&#8599;</span>
+    </a>
+    <a href="https://kids.kiddle.co/Endangered_species" target="_blank" class="src-link" style="border:2px solid #0ea5e9;">
+      <span class="src-ico">&#129304;</span><div class="src-info"><div class="src-title">What does endangered mean? <span class="src-tag" style="background:#e0f2fe;color:#0c4a6e;">EASY READ</span></div><div class="src-org">Kiddle Encyclopedia</div></div><span class="src-arr">&#8599;</span>
+    </a>
+    <a href="https://kids.kiddle.co/Green_sea_turtle" target="_blank" class="src-link" style="border:2px solid #0ea5e9;">
+      <span class="src-ico">&#128034;</span><div class="src-info"><div class="src-title">Green sea turtle facts for kids <span class="src-tag" style="background:#e0f2fe;color:#0c4a6e;">EASY READ</span></div><div class="src-org">Kiddle Encyclopedia</div></div><span class="src-arr">&#8599;</span>
+    </a><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127807;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Fingal Head &mdash; Littoral Rainforest and Threats <span class="tag t-loc">Local</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">OzBeaches</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://kids.kiddle.co/Green_sea_turtle" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--teal);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>The critically endangered littoral rainforest &mdash; what it is and what threatens it</li><li>Threats to turtle nesting beaches from development and rising sea levels</li><li>Why coastal development is the biggest ongoing danger</li></ul></div>
+  <a href="https://www.ozbeaches.com.au/blogs/beaches/fingal-head-and-dreamtime-beach-natural-beauty-amongst-ancient-lava-flows" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127968;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Fingal Head Community &mdash; Environmental Threats <span class="tag t-loc">Local</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">Fingal Head Community Association</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://www.ozbeaches.com.au/blogs/beaches/fingal-head-and-dreamtime-beach-natural-beauty-amongst-ancient-lava-flows" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--teal);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>Current environmental hazards affecting the headland right now</li><li>Threats to migratory birds and turtle nesting</li><li>What local people believe must change</li></ul></div>
+  <a href="https://fingalhead.com" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#129416;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Cook Island Aquatic Reserve <span class="tag t-gov">Govt</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">NSW Department of Primary Industries</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://fingalhead.com" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--teal);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>What species are protected in the reserve and why</li><li>Threats facing grey nurse sharks and other marine species</li><li>What the reserve protects and what it does not cover</li></ul></div>
+  <a href="https://www.dpi.nsw.gov.au/fishing/marine-protected-areas/aquatic-reserves/cook-island" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div></div><div class="sec" id="fingal-conservation"><div class="sec-head"><div class="sec-num" style="background:var(--green)">4</div><div><h3>Conservation Efforts</h3><p>What is being done &mdash; and what still needs to happen</p></div></div><div class="sc sc-green"><h4>&#10003; Success criteria</h4><ul><li>What protection already exists for this place?</li><li>Who is working to protect it and how?</li><li>What has improved as a result of conservation?</li><li>What still needs to happen &mdash; this becomes your call to action</li><li>End with a powerful rhetorical question</li></ul></div><div class="q-section"><div class="qs-title">Research questions &mdash; find the answers in the sources below</div><div class="q-list"><div class="q-item"><div class="q-num" style="background:var(--green)">1</div><div class="q-text">When was Cook Island first protected and what does that protection actually mean &mdash; what can and cannot happen there?</div></div><div class="q-item"><div class="q-num" style="background:var(--green)">2</div><div class="q-text">What is Fingal Head Coastcare doing to restore the headland? What have they achieved?</div></div><div class="q-item"><div class="q-num" style="background:var(--green)">3</div><div class="q-text">What parts of Fingal Head are NOT yet protected? What is the community calling for?</div></div><div class="q-item"><div class="q-num" style="background:var(--green)">4</div><div class="q-text">What would you ask the government to do in your call to action? Make it specific, not vague.</div></div><div class="q-item"><div class="q-num" style="background:var(--green)">5</div><div class="q-text">Write two different rhetorical questions and choose the stronger one. What makes one more powerful than the other?</div></div></div></div><div class="callout c-green"><h4>&#128161; Persuasive thinking</h4>A strong call to action names a specific person or group who has the power to act and tells them exactly what to do. &ldquo;The government must protect Fingal Head&rdquo; is stronger than &ldquo;Someone should do something.&rdquo; Who specifically? What specifically?</div><div class="src-title-row">Sources for Conservation</div>
+    <a href="https://kids.kiddle.co/World_Heritage_Site" target="_blank" class="src-link" style="border:2px solid #0ea5e9;">
+      <span class="src-ico">&#129304;</span><div class="src-info"><div class="src-title">What is a World Heritage Site? <span class="src-tag" style="background:#e0f2fe;color:#0c4a6e;">EASY READ</span></div><div class="src-org">Kiddle Encyclopedia</div></div><span class="src-arr">&#8599;</span>
+    </a>
+    <a href="https://kids.kiddle.co/Caring_for_Country" target="_blank" class="src-link" style="border:2px solid #0ea5e9;">
+      <span class="src-ico">&#129304;</span><div class="src-info"><div class="src-title">What is caring for Country? <span class="src-tag" style="background:#e0f2fe;color:#0c4a6e;">EASY READ</span></div><div class="src-org">Kiddle Encyclopedia</div></div><span class="src-arr">&#8599;</span>
+    </a>
+    <a href="https://kids.kiddle.co/Marine_protected_area" target="_blank" class="src-link" style="border:2px solid #0ea5e9;">
+      <span class="src-ico">&#129304;</span><div class="src-info"><div class="src-title">What is a marine protected area? <span class="src-tag" style="background:#e0f2fe;color:#0c4a6e;">EASY READ</span></div><div class="src-org">Kiddle Encyclopedia</div></div><span class="src-arr">&#8599;</span>
+    </a><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127968;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Fingal Head Coastcare &mdash; Community Conservation <span class="tag t-loc">Local</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">Fingal Head Community Association</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://kids.kiddle.co/Marine_protected_area" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--teal);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>What Coastcare is doing to restore the headland</li><li>Turtle monitoring and rainforest planting projects</li><li>What the community is calling for from government</li></ul></div>
+  <a href="https://fingalhead.com" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#129416;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Cook Island Aquatic Reserve <span class="tag t-gov">Govt</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">NSW Department of Primary Industries</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://fingalhead.com" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--teal);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>What the marine reserve protects and what fishing rules apply</li><li>What has improved since 1998</li><li>What is still at risk outside the reserve boundary</li></ul></div>
+  <a href="https://www.dpi.nsw.gov.au/fishing/marine-protected-areas/aquatic-reserves/cook-island" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#128034;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Green Sea Turtle &mdash; Species Profile <span class="tag t-gov">Govt</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">Australian Government &mdash; DCCEEW</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://www.dpi.nsw.gov.au/fishing/marine-protected-areas/aquatic-reserves/cook-island" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--teal);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>Conservation status of green turtles in Australia</li><li>What recovery actions are in place</li><li>What threats still need to be addressed</li></ul></div>
+  <a href="https://www.dcceew.gov.au/environment/biodiversity/threatened/species/pages/green-turtle.aspx" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div></div><div class="sec" id="fingal-vocab"><div class="sec-head"><div class="sec-num" style="background:#0f766e">&#128214;</div><div><h3>Key vocabulary</h3><p>Tier 3 words &mdash; understand them before you use them</p></div></div><div class="callout c-teal"><h4>Why vocabulary matters</h4>When you use a Tier 3 word correctly you sound like an expert. That gives you authority over your text. Understand each word and use it where it fits naturally &mdash; don't just paste it in.</div><div class="vocab-grid"><div class="vc"><div class="vw">Basalt</div><div class="vd">Dark volcanic rock formed when lava cools quickly at the surface</div></div><div class="vc"><div class="vw">Hexagonal</div><div class="vd">Six-sided shape &mdash; the shape of the columns at Fingal Head</div></div><div class="vc"><div class="vw">Columnar jointing</div><div class="vd">Cracks that form six-sided columns as lava cools from the outside inwards</div></div><div class="vc"><div class="vw">Littoral rainforest</div><div class="vd">Rainforest that grows close to the sea &mdash; critically endangered in Australia</div></div><div class="vc"><div class="vw">Aquatic reserve</div><div class="vd">A protected area of water where fishing and development are controlled by law</div></div><div class="vc"><div class="vw">Biodiversity</div><div class="vd">The variety of living species &mdash; plants, animals, insects &mdash; in a particular area</div></div><div class="vc"><div class="vw">Endemic</div><div class="vd">Found only in one specific place and nowhere else on Earth</div></div><div class="vc"><div class="vw">Critically endangered</div><div class="vd">At very high risk of extinction if threats are not removed immediately</div></div><div class="vc"><div class="vw">Conservation</div><div class="vd">The protection and careful management of the natural environment</div></div><div class="vc"><div class="vw">Indigenous custodian</div><div class="vd">Aboriginal person with the cultural responsibility of caring for Country</div></div><div class="vc"><div class="vw">Erosion caldera</div><div class="vd">A large volcanic crater shaped over millions of years by wind and water</div></div><div class="vc"><div class="vw">Marine protected area</div><div class="vd">An area of ocean legally protected from fishing and harmful development</div></div></div></div></div>
+<!-- WOLLUMBIN -->
+<div class="panel wollumbin-panel" id="p-wollumbin">
+
+<div class="place-hero" style="background:#0f2a0f;display:flex;align-items:flex-end;padding:0;position:relative;">
+  <svg viewBox="0 0 1000 320" xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:100%;height:100%;top:0;left:0;" preserveAspectRatio="xMidYMid slice">
+    <!-- Sky gradient -->
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#1a3a2a"/>
+        <stop offset="1" stop-color="#2a5a3a"/>
+      </linearGradient>
+      <linearGradient id="mt" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#1a3a1a"/>
+        <stop offset="1" stop-color="#2a5a2a"/>
+      </linearGradient>
+    </defs>
+    <rect width="1000" height="320" fill="url(#sky)"/>
+    <!-- Clouds -->
+    <ellipse cx="500" cy="60" rx="200" ry="40" fill="#2a5a3a" opacity="0.5"/>
+    <ellipse cx="480" cy="50" rx="150" ry="30" fill="#3a7a4a" opacity="0.3"/>
+    <!-- Rainforest hills -->
+    <polygon points="0,250 150,150 300,200 450,130 550,170 700,110 850,160 1000,130 1000,320 0,320" fill="#1a4a1a"/>
+    <polygon points="0,280 100,220 250,240 400,200 500,230 650,190 800,220 1000,200 1000,320 0,320" fill="#2a5a2a"/>
+    <!-- Wollumbin peak -->
+    <polygon points="420,50 500,180 580,50" fill="url(#mt)"/>
+    <polygon points="435,70 500,175 565,70" fill="#2a5a2a" opacity="0.6"/>
+    <!-- Mist around peak -->
+    <ellipse cx="500" cy="80" rx="120" ry="25" fill="#3a7a4a" opacity="0.3"/>
+    <!-- Caldera rim hills -->
+    <polygon points="0,200 200,160 350,180 0,320" fill="#1a4a1a" opacity="0.8"/>
+    <polygon points="650,170 800,155 1000,180 1000,320 650,320" fill="#1a4a1a" opacity="0.8"/>
+    <!-- Cane fields suggestion -->
+    <rect y="270" width="1000" height="50" fill="#2a6a1a" opacity="0.4"/>
+    <!-- Tweed River -->
+    <path d="M0,290 Q250,280 500,285 Q750,290 1000,280" stroke="#3a8a9a" stroke-width="6" fill="none" opacity="0.5"/>
+  </svg>
+  <div style="position:relative;z-index:2;padding:1.4rem 1.75rem;color:#fff;width:100%;background:linear-gradient(to top,rgba(0,0,0,.78) 0%,transparent 100%);">
+    <div class="pname">Wollumbin</div>
+    <div class="psub">Cloud Catcher &middot; Bundjalung Nation &middot; 12 km south-west of Murwillumbah</div>
+  </div>
+</div>
+
+<div class="gallery">
+  <a href="https://www.nationalparks.nsw.gov.au/visit-a-park/parks/wollumbin-national-park" target="_blank" style="text-decoration:none;">
+    <div class="gal" style="background:linear-gradient(160deg,#1a4a1a,#2a7a2a);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+      <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;top:0;left:0;" preserveAspectRatio="xMidYMid slice">
+        <rect width="200" height="150" fill="#1a4a1a"/>
+        <polygon points="60,10 100,80 140,10" fill="#2a6a2a"/>
+        <rect y="100" width="200" height="50" fill="#2a6a1a" opacity="0.7"/>
+        <polygon points="0,100 60,70 120,90 200,75 200,150 0,150" fill="#3a8a3a" opacity="0.6"/>
+        <path d="M0,115 Q100,108 200,112" stroke="#3a8a9a" stroke-width="4" fill="none" opacity="0.6"/>
+      </svg>
+      <div class="gal-cap" style="z-index:2;">Wollumbin &mdash; NSW National Parks &#8599;</div>
+    </div>
+  </a>
+  <a href="https://www.nationalparks.nsw.gov.au/visit-a-park/parks/wollumbin-national-park/learn-more" target="_blank" style="text-decoration:none;">
+    <div class="gal" style="background:linear-gradient(160deg,#1a2a3a,#2a3a5a);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+      <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;top:0;left:0;" preserveAspectRatio="xMidYMid slice">
+        <rect width="200" height="150" fill="#1a2a3a"/>
+        <ellipse cx="100" cy="40" rx="50" ry="30" fill="#e8a020" opacity="0.4"/>
+        <ellipse cx="100" cy="45" rx="30" ry="20" fill="#e8c060" opacity="0.5"/>
+        <polygon points="0,130 80,60 160,130" fill="#1a3a1a" opacity="0.8"/>
+        <polygon points="60,150 120,80 180,150" fill="#2a4a2a" opacity="0.6"/>
+        <text x="100" y="130" text-anchor="middle" fill="#e8c060" font-size="9" font-family="sans-serif" opacity="0.9">First light in Australia</text>
+      </svg>
+      <div class="gal-cap" style="z-index:2;">Wollumbin wildlife &amp; plants &#8599;</div>
+    </div>
+  </a>
+  <a href="https://www.environment.nsw.gov.au/topics/parks-reserves-and-protected-areas/park-management/community-engagement/wollumbin-national-park" target="_blank" style="text-decoration:none;">
+    <div class="gal" style="background:linear-gradient(135deg,#1a3a1a,#0f2a1a);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+      <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;top:0;left:0;" preserveAspectRatio="xMidYMid slice">
+        <rect width="200" height="150" fill="#1a3a1a"/>
+        <path d="M20,80 Q60,40 100,70 Q140,100 180,60 Q190,50 195,55 Q185,65 175,65 Q130,110 90,80 Q50,50 10,90 Z" fill="#4a7a2a" opacity="0.8"/>
+        <path d="M20,80 Q60,40 100,70 Q140,100 180,60" stroke="#6a9a4a" stroke-width="3" fill="none" opacity="0.6"/>
+        <ellipse cx="185" cy="57" rx="8" ry="5" fill="#6a9a4a" opacity="0.8"/>
+        <ellipse cx="188" cy="55" rx="3" ry="3" fill="#1a1a1a"/>
+      </svg>
+      <div class="gal-cap" style="z-index:2;">Wollumbin cultural significance &#8599;</div>
+    </div>
+  </a>
+</div>
+<div class="img-credit">&#128247; Click any card to view the real photograph on Wikimedia Commons (free to use, CC licence)</div>
+
+<div class="alert">
+  <h4>&#9888;&#65039; Important &mdash; the summit track is permanently closed</h4>
+  <p>The summit track at Wollumbin is permanently closed out of respect for Bundjalung custodians, who consider it a sacred Men's Place. This is not just a rule &mdash; it is an act of respect for the world's oldest living culture. The story of <em>why</em> the track is closed is one of the most powerful arguments you can make in your hybrid text.</p>
+</div>
+
+<div class="map-wrap">
+  <div class="map-box">
+    <a href="https://www.openstreetmap.org/?mlat=-28.3822&mlon=153.3406#map=12/-28.3822/153.3406" target="_blank" style="display:block;"><iframe src="https://www.openstreetmap.org/export/embed.html?bbox=153.2500,-28.4800,153.4500,-28.2800&layer=mapnik&marker=-28.3822,153.3406" title="Map of Wollumbin" loading="lazy" style="pointer-events:none;"></iframe></a>
+    <div class="map-foot">
+      <span>&#128205; Wollumbin National Park &mdash; 12 km south-west of Murwillumbah, Far North Coast NSW</span>
+      <a href="https://www.openstreetmap.org/?mlat=-28.3822&mlon=153.3406#map=12/-28.3822/153.3406" target="_blank">Open larger map &#8599;</a>
+    </div>
+  </div>
+</div>
+
+<div class="section-nav">
+  <button class="section-btn on" onclick="switchSec('wollumbin','geo',this)">1 &middot; Geography</button>
+  <button class="section-btn" onclick="switchSec('wollumbin','human',this)">2 &middot; Human Impact</button>
+  <button class="section-btn" onclick="switchSec('wollumbin','issues',this)">3 &middot; Issues</button>
+  <button class="section-btn" onclick="switchSec('wollumbin','conservation',this)">4 &middot; Conservation</button>
+  <button class="section-btn" onclick="switchSec('wollumbin','vocab',this)">&#128214; Vocabulary</button>
+</div>
+<div class="sec on" id="wollumbin-geo"><div class="sec-head"><div class="sec-num" style="background:var(--green)">1</div><div><h3>Geography</h3><p>Where it is &middot; what it looks like &middot; how it was formed &middot; animals and plants</p></div></div><div class="sc sc-green"><h4>&#10003; Success criteria</h4><ul><li>Where Wollumbin is located</li><li>A description of the place</li><li>How it was formed</li><li>Animals and plants found there</li><li>Multimodal features &mdash; maps, diagrams or illustrations to help explain or add meaning</li></ul></div><div class="q-section"><div class="qs-title">Research questions &mdash; find the answers in the sources below</div><div class="q-list"><div class="q-item"><div class="q-num" style="background:var(--green)">1</div><div class="q-text">Where exactly is Wollumbin? How far from Murwillumbah? How high above sea level?</div></div><div class="q-item"><div class="q-num" style="background:var(--green)">2</div><div class="q-text">What is the Tweed Caldera? How big is it &mdash; and what does that tell us about how large the original volcano was?</div></div><div class="q-item"><div class="q-num" style="background:var(--green)">3</div><div class="q-text">What type of rainforest grows in the park? What makes it part of a World Heritage Area?</div></div><div class="q-item"><div class="q-num" style="background:var(--green)">4</div><div class="q-text">What does "Wollumbin" mean? Why is this name so important to the Bundjalung nation?</div></div><div class="q-item"><div class="q-num" style="background:var(--green)">5</div><div class="q-text">Name at least four animals found in the park. What is the conservation status of each one?</div></div><div class="q-item"><div class="q-num" style="background:var(--green)">6</div><div class="q-text">What multimodal feature will you include in your geography section? Sketch it on your planning template now.</div></div></div></div><div class="callout c-green"><h4>&#128161; Narrative thinking</h4>Wollumbin is the first place in Australia to receive the sun's light each morning. How could you use that detail to open your hybrid text with a powerful narrative image? Think: what does it look like, feel like, sound like at that moment?</div><div class="src-title-row">Sources for Geography</div>
+    <div style="background:#fff3cd;border:2px solid #f59e0b;border-radius:10px;padding:.75rem 1rem;margin-bottom:.75rem;font-size:.9rem;color:#713f12;">
+      <strong>&#127910; Watch first!</strong> &mdash; This video shows Wollumbin rising above the Tweed Valley so you can picture it before you start.
+    </div>
+    <a href="https://www.youtube.com/watch?v=QQeQF6apv_U" target="_blank" class="src-link" style="border:2px solid #f59e0b;">
+      <span class="src-ico">&#127910;</span><div class="src-info"><div class="src-title">Wollumbin &mdash; the mountain and rainforest <span class="src-tag" style="background:#fef3c7;color:#92400e;">VIDEO</span></div><div class="src-org">YouTube</div></div><span class="src-arr">&#8599;</span>
+    </a>
+    <a href="https://kids.kiddle.co/Mount_Warning" target="_blank" class="src-link" style="border:2px solid #0ea5e9;">
+      <span class="src-ico">&#129304;</span><div class="src-info"><div class="src-title">Wollumbin facts for kids <span class="src-tag" style="background:#e0f2fe;color:#0c4a6e;">EASY READ</span></div><div class="src-org">Kiddle Encyclopedia &mdash; written for students</div></div><span class="src-arr">&#8599;</span>
+    </a>
+    <a href="https://kids.kiddle.co/Caldera" target="_blank" class="src-link" style="border:2px solid #0ea5e9;">
+      <span class="src-ico">&#127755;</span><div class="src-info"><div class="src-title">What is a caldera? <span class="src-tag" style="background:#e0f2fe;color:#0c4a6e;">EASY READ</span></div><div class="src-org">Kiddle Encyclopedia</div></div><span class="src-arr">&#8599;</span>
+    </a>
+    <a href="https://kids.kiddle.co/Albert%27s_lyrebird" target="_blank" class="src-link" style="border:2px solid #0ea5e9;">
+      <span class="src-ico">&#129416;</span><div class="src-info"><div class="src-title">Albert's lyrebird facts for kids <span class="src-tag" style="background:#e0f2fe;color:#0c4a6e;">EASY READ</span></div><div class="src-org">Kiddle Encyclopedia</div></div><span class="src-arr">&#8599;</span>
+    </a><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127794;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Wollumbin National Park <span class="tag t-gov">Govt</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">NSW National Parks and Wildlife Service</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://kids.kiddle.co/Albert%27s_lyrebird" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--green);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>Official description, location and height above sea level</li><li>Wildlife &mdash; lyrebirds, quolls, frogs, pythons</li><li>Walking tracks and visitor information</li></ul></div>
+  <a href="https://www.nationalparks.nsw.gov.au/visit-a-park/parks/wollumbin-national-park" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127807;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Wollumbin &mdash; Threatened Species and World Heritage <span class="tag t-gov">Govt</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">NSW National Parks &mdash; Learn More</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://www.nationalparks.nsw.gov.au/visit-a-park/parks/wollumbin-national-park" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--green);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>Detailed wildlife list &mdash; threatened birds, frogs and mammals</li><li>Types of rainforest found in the park</li><li>Why Gondwana Rainforests were World Heritage listed in 1986</li></ul></div>
+  <a href="https://www.nationalparks.nsw.gov.au/visit-a-park/parks/wollumbin-national-park/learn-more" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127758;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Gondwana Rainforests of Australia &mdash; World Heritage <span class="tag t-edu">UNESCO</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">UNESCO World Heritage Centre</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://www.nationalparks.nsw.gov.au/visit-a-park/parks/wollumbin-national-park/learn-more" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--green);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>Why the Gondwana Rainforests were listed as World Heritage in 1986</li><li>What "outstanding universal value" means</li><li>What makes this landscape globally significant</li></ul></div>
+  <a href="https://whc.unesco.org/en/list/368" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div></div><div class="sec" id="wollumbin-human"><div class="sec-head"><div class="sec-num" style="background:var(--amber)">2</div><div><h3>History of Human Impact</h3><p>What humans have done to this place over time</p></div></div><div class="sc sc-amber"><h4>&#10003; Success criteria</h4><ul><li>The history of European arrival and naming of "Mount Warning"</li><li>How tourism has affected the sacred summit over decades</li><li>The story of the name change from "Mount Warning" to Wollumbin</li><li>Key dates to build a timeline</li></ul></div><div class="q-section"><div class="qs-title">Research questions &mdash; find the answers in the sources below</div><div class="q-list"><div class="q-item"><div class="q-num" style="background:var(--amber)">1</div><div class="q-text">How long have Bundjalung people had a connection to Wollumbin? What does it mean to them spiritually and culturally?</div></div><div class="q-item"><div class="q-num" style="background:var(--amber)">2</div><div class="q-text">Why did James Cook name it "Mount Warning" in 1770? What does that name reveal about the European view of this land?</div></div><div class="q-item"><div class="q-num" style="background:var(--amber)">3</div><div class="q-text">What happened when tourists began climbing the summit? Why was this harmful to Bundjalung people?</div></div><div class="q-item"><div class="q-num" style="background:var(--amber)">4</div><div class="q-text">When was the summit track closed and why? Who made that decision?</div></div><div class="q-item"><div class="q-num" style="background:var(--amber)">5</div><div class="q-text">Why is the name change from "Mount Warning" to "Wollumbin" significant? What does it represent?</div></div></div></div><div class="callout c-amber"><h4>&#128161; Narrative thinking</h4>Think about what it felt like for Bundjalung people to watch thousands of tourists climb their sacred mountain year after year. You don't need to be angry in your writing &mdash; honest and respectful is more powerful. How would you write that as a story moment?</div><div class="src-title-row">Sources for Human Impact</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127963;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Wollumbin &mdash; Cultural Significance and History <span class="tag t-gov">Govt</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">NSW Environment and Heritage</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://whc.unesco.org/en/list/368" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--green);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>Bundjalung cultural and spiritual significance &mdash; songlines and sacred law</li><li>Why Cook named it "Mount Warning" in 1770</li><li>The impact of decades of tourism on the sacred summit</li><li>The Aboriginal Place declaration 2014 and what it changed</li></ul></div>
+  <a href="https://www.environment.nsw.gov.au/topics/parks-reserves-and-protected-areas/park-management/community-engagement/wollumbin-national-park" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127794;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Wollumbin National Park &mdash; History and Management <span class="tag t-gov">Govt</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">NSW National Parks and Wildlife Service</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://www.environment.nsw.gov.au/topics/parks-reserves-and-protected-areas/park-management/community-engagement/wollumbin-national-park" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--green);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>When the park was reserved (1928) and declared national park (1966)</li><li>History of the summit track and its closure</li><li>How the park's management has changed over time</li></ul></div>
+  <a href="https://www.nationalparks.nsw.gov.au/visit-a-park/parks/wollumbin-national-park" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div></div><div class="sec" id="wollumbin-issues"><div class="sec-head"><div class="sec-num" style="background:var(--purple)">3</div><div><h3>Acknowledgment of Issues</h3><p>What threatens this place today &mdash; environmentally and culturally</p></div></div><div class="sc sc-purple"><h4>&#10003; Success criteria</h4><ul><li>What environmental threats does Wollumbin face today?</li><li>Which species are at risk of extinction in the park?</li><li>Why is cultural protection just as important as environmental protection?</li><li>Use emotive language and modal words to convey urgency</li></ul></div><div class="q-section"><div class="qs-title">Research questions &mdash; find the answers in the sources below</div><div class="q-list"><div class="q-item"><div class="q-num" style="background:var(--purple)">1</div><div class="q-text">Which specific animal or plant species in Wollumbin are threatened or endangered right now? What is putting them at risk?</div></div><div class="q-item"><div class="q-num" style="background:var(--purple)">2</div><div class="q-text">How does climate change threaten the Gondwana rainforest ecosystem?</div></div><div class="q-item"><div class="q-num" style="background:var(--purple)">3</div><div class="q-text">What is the ongoing debate about the summit track? Why do some people want it reopened?</div></div><div class="q-item"><div class="q-num" style="background:var(--purple)">4</div><div class="q-text">Why is cultural protection &mdash; protecting the sacred significance of Wollumbin &mdash; just as important as protecting the environment?</div></div><div class="q-item"><div class="q-num" style="background:var(--purple)">5</div><div class="q-text">What would be lost forever if either the environment OR the cultural significance of Wollumbin is not protected?</div></div></div></div><div class="callout c-purple"><h4>&#128161; Persuasive thinking</h4>Wollumbin faces two threats at once &mdash; environmental and cultural. The strongest argument treats both as equally important. Can you write a sentence that connects the destruction of habitat to the silencing of culture? That is sophisticated hybrid writing.</div><div class="src-title-row">Sources for Issues</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127807;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Wollumbin &mdash; Threatened Species <span class="tag t-gov">Govt</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">NSW National Parks &mdash; Learn More</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://www.nationalparks.nsw.gov.au/visit-a-park/parks/wollumbin-national-park" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--green);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>Fleay's barred frog &mdash; endangered, restricted to rainforest streams</li><li>Albert's lyrebird &mdash; rarer than the superb lyrebird, threatened</li><li>Rufous scrub-bird &mdash; only found in isolated rainforest patches</li><li>Why losing one species affects the whole ecosystem</li></ul></div>
+  <a href="https://www.nationalparks.nsw.gov.au/visit-a-park/parks/wollumbin-national-park/learn-more" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127963;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Wollumbin &mdash; Cultural Issues and Summit Debate <span class="tag t-gov">Govt</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">NSW Environment and Heritage</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://www.nationalparks.nsw.gov.au/visit-a-park/parks/wollumbin-national-park/learn-more" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--green);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>The ongoing debate about the summit &mdash; permanent vs temporary closure</li><li>Tension between tourism and cultural protection</li><li>What Bundjalung custodians say about threats to their sacred site</li></ul></div>
+  <a href="https://www.environment.nsw.gov.au/topics/parks-reserves-and-protected-areas/park-management/community-engagement/wollumbin-national-park" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127758;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Gondwana Rainforests &mdash; Conservation Status <span class="tag t-edu">UNESCO</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">UNESCO World Heritage Centre</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://www.environment.nsw.gov.au/topics/parks-reserves-and-protected-areas/park-management/community-engagement/wollumbin-national-park" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--green);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>Threats to Gondwana Rainforests from climate change and invasive species</li><li>Why this World Heritage Area is considered under threat</li><li>What outstanding values are in danger of being lost</li></ul></div>
+  <a href="https://whc.unesco.org/en/list/368" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div></div><div class="sec" id="wollumbin-conservation"><div class="sec-head"><div class="sec-num" style="background:var(--green)">4</div><div><h3>Conservation Efforts</h3><p>What is being done &mdash; and what still needs to happen</p></div></div><div class="sc sc-green"><h4>&#10003; Success criteria</h4><ul><li>What protection already exists &mdash; World Heritage, national park, Aboriginal Place?</li><li>Who is involved in protecting Wollumbin?</li><li>What has the Aboriginal Place declaration (2014) changed in law and in practice?</li><li>What still needs to happen &mdash; this is your call to action</li><li>End with a powerful rhetorical question</li></ul></div><div class="q-section"><div class="qs-title">Research questions &mdash; find the answers in the sources below</div><div class="q-list"><div class="q-item"><div class="q-num" style="background:var(--green)">1</div><div class="q-text">What does the Aboriginal Place declaration (2014) mean legally? What can Bundjalung custodians now decide?</div></div><div class="q-item"><div class="q-num" style="background:var(--green)">2</div><div class="q-text">Who is the Wollumbin Consultative Group? Why does their role matter?</div></div><div class="q-item"><div class="q-num" style="background:var(--green)">3</div><div class="q-text">What does the Bundjalung concept of "caring for Country" mean? How is it different from Western ideas of conservation?</div></div><div class="q-item"><div class="q-num" style="background:var(--green)">4</div><div class="q-text">What is Australia's legal obligation to protect a World Heritage Area? Is the government meeting that obligation?</div></div><div class="q-item"><div class="q-num" style="background:var(--green)">5</div><div class="q-text">Write a specific call to action for your conclusion. Who must act? What exactly should they do? Then write your rhetorical question.</div></div></div></div><div class="callout c-green"><h4>&#128161; The strongest argument</h4>The Bundjalung custodians say: &ldquo;We have a responsibility for caring for Country &mdash; our environment, plants, animals, water, earth, and sky.&rdquo; Think about how to honour that statement in your writing. It is thousands of years of knowledge asking to be respected. That is your most powerful argument.</div><div class="src-title-row">Sources for Conservation</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127963;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Wollumbin &mdash; Aboriginal Place Management Plan <span class="tag t-gov">Govt</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">NSW Environment and Heritage</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://whc.unesco.org/en/list/368" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--green);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>The Aboriginal Place declaration 2014 &mdash; legal and cultural meaning</li><li>The Wollumbin Consultative Group &mdash; who they are and what power they have</li><li>The Bundjalung statement about responsibility for Country</li><li>What "caring for Country" means in practice</li></ul></div>
+  <a href="https://www.environment.nsw.gov.au/topics/parks-reserves-and-protected-areas/park-management/community-engagement/wollumbin-national-park" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127794;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Wollumbin &mdash; What We're Doing for Aboriginal Culture <span class="tag t-gov">Govt</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">NSW National Parks and Wildlife Service</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://www.environment.nsw.gov.au/topics/parks-reserves-and-protected-areas/park-management/community-engagement/wollumbin-national-park" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--green);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>Current programs protecting threatened species</li><li>How cultural heritage and environmental protection work together</li><li>What is still needed &mdash; gaps in current protection</li></ul></div>
+  <a href="https://www.nationalparks.nsw.gov.au/visit-a-park/parks/wollumbin-national-park/learn-more" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div><div style="background:#fff;border:1px solid #e7e5e4;border-radius:12px;padding:1rem 1.1rem;margin-bottom:.65rem;box-shadow:0 1px 4px rgba(0,0,0,.05);">
+  <div style="display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;">
+    <span style="font-size:1.3rem;">&#127758;</span>
+    <div>
+      <div style="font-weight:700;font-size:.9rem;color:#1c1917;">Gondwana Rainforests &mdash; World Heritage Obligations <span class="tag t-edu">UNESCO</span></div>
+      <div style="font-size:.72rem;color:#78716c;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:.08rem;">UNESCO World Heritage Centre</div>
+    </div>
+  </div>
+  <ul style="list-style:none;display:flex;flex-direction:column;gap:.28rem;margin-bottom:.7rem;">
+    
+  </ul>
+  <a href="https://www.nationalparks.nsw.gov.au/visit-a-park/parks/wollumbin-national-park/learn-more" target="_blank" target="_blank" style="display:inline-flex;align-items:center;gap:.35rem;padding:.45rem 1rem;border-radius:8px;font-size:.82rem;font-weight:700;color:#fff;text-decoration:none;background:var(--green);" class="open-btn">Open website ↗</a>
+</div></div><span class="src-arr">&#9660;</span></div>
+  <div class="src-body"><div class="lf"><h5>Look here for</h5><ul><li>Australia's legal obligations to protect World Heritage sites</li><li>What UNESCO expects of member countries</li><li>Use this to argue that protection is not optional &mdash; it is a legal commitment</li></ul></div>
+  <a href="https://whc.unesco.org/en/list/368" target="_blank" class="open-btn">Open website &#8599;</a></div>
+</div></div><div class="sec" id="wollumbin-vocab"><div class="sec-head"><div class="sec-num" style="background:#166534">&#128214;</div><div><h3>Key vocabulary</h3><p>Tier 3 words &mdash; understand them before you use them</p></div></div><div class="callout c-green"><h4>Why vocabulary matters</h4>When you use a Tier 3 word correctly you sound like an expert. That gives you authority over your text. Understand each word and use it where it fits naturally.</div><div class="vocab-grid"><div class="vc"><div class="vw">Caldera</div><div class="vd">A large volcanic crater formed when a volcano collapses or is eroded over millions of years</div></div><div class="vc"><div class="vw">Biodiversity</div><div class="vd">The variety of living species &mdash; plants, animals, insects &mdash; found in a particular area</div></div><div class="vc"><div class="vw">Gondwana</div><div class="vd">An ancient supercontinent that broke apart 180 million years ago &mdash; Australia was once part of it</div></div><div class="vc"><div class="vw">World Heritage Area</div><div class="vd">A place UNESCO says has outstanding value to all of humanity and must be legally protected</div></div><div class="vc"><div class="vw">Aboriginal Place</div><div class="vd">A site with special legal protection because of its cultural significance to Aboriginal people in NSW</div></div><div class="vc"><div class="vw">Custodian</div><div class="vd">A person responsible for looking after something &mdash; here, First Nations people who care for Country</div></div><div class="vc"><div class="vw">Songlines</div><div class="vd">Ancient paths connecting Aboriginal communities across the land through story, song and law</div></div><div class="vc"><div class="vw">Sacred</div><div class="vd">Deserving deep respect &mdash; connected to spiritual or cultural law that must not be violated</div></div><div class="vc"><div class="vw">Threatened species</div><div class="vd">A plant or animal at risk of extinction if its habitat is not actively protected</div></div><div class="vc"><div class="vw">Subtropical rainforest</div><div class="vd">A rainforest found in warm climates, rich with diverse species &mdash; found across northern NSW</div></div><div class="vc"><div class="vw">Conservation</div><div class="vd">The protection and careful management of the natural and cultural environment</div></div><div class="vc"><div class="vw">Indigenous sovereignty</div><div class="vd">The right of Aboriginal people to make decisions about their own Country and culture</div></div></div></div></div>
+<div class="footer">
+  <div class="fi">
+    <h3>Remember &mdash; your text must be hybrid, not just an information report</h3>
+    <div class="modes">
+      <div class="mode"><h4>Narrative</h4><p>Draw the reader in. Use descriptive language, imagery and similes. Make them feel like they are standing at that place.</p></div>
+      <div class="mode"><h4>Informative</h4><p>Give facts from your research. Use your Tier 3 vocabulary. Sound like an expert who knows this place deeply.</p></div>
+      <div class="mode"><h4>Persuasive</h4><p>Make the reader care. Use modal words, emotive language, and a rhetorical question. Take a clear position.</p></div>
+    </div>
+    <div class="fn">Blend all three &mdash; don't write them in separate sections. The craft is in the weaving.</div>
+  </div>
+</div>
+
+<script>
+function switchPlace(p){
+  document.querySelectorAll('.panel').forEach(function(el){
+    el.style.display='none';
+    el.classList.remove('on');
+  });
+  document.querySelectorAll('.place-btn').forEach(function(el){
+    el.classList.remove('on');
+  });
+  var panel=document.getElementById('p-'+p);
+  panel.style.display='block';
+  panel.classList.add('on');
+  document.querySelector('.place-btn[data-p="'+p+'"]').classList.add('on');
+  window.scrollTo(0,0);
+}
+function switchSec(place,sec,btn){
+  var panel=document.getElementById('p-'+place);
+  panel.querySelectorAll('.sec').forEach(function(el){el.classList.remove('on');});
+  panel.querySelectorAll('.section-btn').forEach(function(el){el.classList.remove('on');});
+  document.getElementById(place+'-'+sec).classList.add('on');
+  btn.classList.add('on');
+}
+function tog(card){card.classList.toggle('open');}
+</script>
+</body>
+</html>
